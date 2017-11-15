@@ -1,0 +1,32 @@
+from tkinter import *
+
+root = Tk()
+root.title("RC GUI")
+root.configure(bg="dark gray")
+theLabel = Label(root, text="Group 8's RC Car GUI", font=("Helvetica", 18), fg="blue", bg="dark gray")
+root.geometry("700x600")
+theLabel.pack()
+
+T = Text(root, height=3, width=30)
+T.pack()
+T.insert(END, "Distance Traveled:\nRoll:\nAcceleration:")
+
+topFrame = Frame(root)
+topFrame.pack()
+bottomFrame = Frame(root)
+bottomFrame.pack(side=BOTTOM)
+
+button1 = Button(bottomFrame, text="Forwards", fg="blue")
+button2 = Button(bottomFrame, text="Left", fg="blue")
+button3 = Button(bottomFrame, text="Backwards", fg="blue")
+button4 = Button(bottomFrame, text="Right", fg="blue")
+
+button1.pack(side=TOP)
+button2.pack(side=LEFT)
+button3.pack(side=LEFT)
+button4.pack(side=LEFT)
+
+Acceleration = Scale(root, length=350, width=20, from_=100,to=-100, tickinterval=10).pack()
+Steering = Scale(root, orient=HORIZONTAL, length=350, width=20, from_=-45,to=45, tickinterval=5).pack()
+
+root.mainloop()
