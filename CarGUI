@@ -1,10 +1,54 @@
 from tkinter import *
 
+#GUI For Group 8's RC Car
+#Sean Jungst
+from car_interface import RCCar
+
+car = RCCar()
+
+#car.on_reading =
+
+def on_gyroscope(gyroscope):
+    value = """
+Acceleration_x: {accel_x},
+Acceleration_y: {accel_y},
+Acceleration_z: {accel_z},
+Pitch: {pitch},
+Roll: {roll},
+Yaw: {yaw},
+    """.format(
+        accel_x = gyroscope.Acceleration_x,
+        accel_y = gyroscope.Acceleration_y,
+        accel_z = gyroscope.Acceleration_z,
+        pitch = gyroscope.Pitch,
+        roll = gyroscope.Roll,
+        yaw = gyroscope.Yaw
+    )
+    #Set tkinter text box with values
+
+def on_key_press(key):
+    if key.keysym == 'Up':
+        RCCar.set_speed(100)
+    if key.keysym == 'Down':
+        RCCar.set_speed(-100)
+    if key.keysym == 'Left':
+        RCCar.set_direction(-100)
+    if key.keysym == 'Right':
+        RCCar.set_direction(100)
+    print("pressed: %s" % key.keysym)
+
+def on_key_release(key):
+    if key.keysym == 'Up' or key.keysym == 'Down':
+        RCCar.set_speed(0)
+    if key.keysym == 'Left' or key.keysym == 'Right':
+        RCCar.set_direction(0)
+    print("released: %s" % key.keysym)
+
 root = Tk()
 root.title("RC GUI")
 root.configure(bg="dark gray")
 theLabel = Label(root, text="Group 8's RC Car GUI", font=("Helvetica", 18), fg="blue", bg="dark gray")
-root.geometry("700x600")
+root.geometry("700x800")
 theLabel.pack()
 
 T = Text(root, height=3, width=30)
@@ -29,4 +73,9 @@ button4.pack(side=LEFT)
 Acceleration = Scale(root, length=350, width=20, from_=100,to=-100, tickinterval=10).pack()
 Steering = Scale(root, orient=HORIZONTAL, length=350, width=20, from_=-45,to=45, tickinterval=5).pack()
 
+frame = Frame(root, width=700, height=800)
+frame.bind("<Key>", on_key_press)
+frame.bind("<KeyRelease>", on_key_release)
+frame.pack()
+frame.focus_set()
 root.mainloop()
