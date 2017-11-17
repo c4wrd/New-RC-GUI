@@ -32,6 +32,7 @@ class RCCar:
         self.send_thread = Thread(target=self.send_target)
         self.recv_thread.start()
         self.send_thread.start()
+        self.on_data = None
 
     def send_target(self):
         while True:
@@ -43,6 +44,8 @@ class RCCar:
         while True:
             data, addr = self.recv_sock.recvfrom(255)
             print("received data: %s" % str(data))
+            if self.on_data is not None:
+                print(data)
 
     def set_speed(self, speed: int):
         """
